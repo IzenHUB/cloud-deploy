@@ -1,0 +1,19 @@
+name: WorkFlow1
+on: [push]
+
+jobs:
+  job1:
+    name: test add
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: install node js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: Run test add
+      run: node dist/Test1.js
