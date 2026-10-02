@@ -1,0 +1,50 @@
+name: Integration test results
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  unit-test:
+    name: Unit test (pass)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm ci
+      - name: Build TypeScript
+        run: npm run build
+      - name: Run unit test
+        run: npm run test:unit
+
+  integration-test:
+    name: Integration test (runs after unit test)
+    needs: unit-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm ci
+      - name: Build TypeScript
+        run: npm run build
+      - name: Run integration test
+        run: npm run test:integration
+
+  intentional-failure-demo:
+    name: Separate intentional failure demo
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show a failing result for demonstration
+        run: |
+          echo "This job is expected to fail for demonstration."
+          exit 1
