@@ -7,7 +7,11 @@ function hello() {
 function add(a, b) {
     return a + b;
 }
+function formatAddition(a, b) {
+    return `${a} + ${b} = ${add(a, b)}`;
+}
 exports.utils = {
     hello,
-    add
+    add,
+    formatAddition
 };
