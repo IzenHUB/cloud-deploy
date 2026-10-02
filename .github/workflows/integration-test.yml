@@ -1,0 +1,55 @@
+name: IntegrationTest
+on: [push]
+
+jobs:
+  job1:
+    name: unit test (pass)
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: install node js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: install dependencies
+      run: npm ci
+
+    - name: build project
+      run: npm run build
+
+    - name: Run unit test
+      run: npm run test:unit
+
+  job2:
+    name: integration test after unit test
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: install node js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: install dependencies
+      run: npm ci
+
+    - name: build project
+      run: npm run build
+
+    - name: Run integration test
+      run: npm run test:integration
+
+  job3:
+    name: intentional failure demo
+    runs-on: ubuntu-latest
+    steps:
+    - name: Show a failing result for demonstration
+      run: |
+        echo "This job is expected to fail for demonstration."
+        exit 1
