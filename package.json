@@ -5,7 +5,7 @@
     "dev": "nodemon",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "node dist/Test1.js",
+    "test": "node dist/Test.js",
     "test:integration": "node dist/Test2.js",
     "test:integration:fail": "node dist/Test3.js"
   },
